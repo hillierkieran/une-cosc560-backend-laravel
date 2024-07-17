@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -74,5 +76,16 @@ class PostController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function test()
+    {
+        // $results = User::all();
+        // $results = User::where('created_at', '>', new DateTime('2024-07-17T03:50:23+00:00'))->get();
+        // $results = User::orderBy('name','asc')->get();
+        // $results = User::skip(2)->take(3)->get();
+        $results = User::count();
+
+        dd($results);
     }
 }
