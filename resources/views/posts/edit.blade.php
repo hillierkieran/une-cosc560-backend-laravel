@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
     <h1>Edit Blog Post</h1>
     <a href="{{ url('/posts') }}" class="btn btn-primary">&#8634; Back</a>
     <form action="{{ route('posts.update', $post->id) }}" method="POST">
@@ -16,4 +17,5 @@
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
+</div>
 @endsection

@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container">
     <h1>Blog Post Details</h1>
     <a href="{{ url('/posts') }}" class="btn btn-primary">&#8634; Back</a>
     <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-primary">&#9998; Edit</a>
@@ -14,4 +15,5 @@
         <li><b>Title:</b> {{ $post->title }}</li>
         <li><b>Content:</b> {{ $post->content }}</li>
     </ul>
+</div>
 @endsection
