@@ -15,7 +15,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        //$posts = Post::all();
+        // If user is not logged in, redirect to login page
+        if (Auth::user() == null)
+        {
+            return view("auth.login");
+        }
+
+        // If user is logged in, show only their posts
         $posts = Auth::user()->posts;
         return view('posts.index', compact('posts'));
     }
@@ -33,7 +39,6 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->all());
         $request->validate([
             'title' => 'required',
             'content'=> 'required'
@@ -48,9 +53,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        // If user is not the owner of the post, return 403 Forbidden
         if(Auth::id() != $post->user_id) {
             abort(403);
         }
+
         return view('posts.show', compact('post'));
     }
 
