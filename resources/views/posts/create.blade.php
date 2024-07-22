@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Create Blog Post</h1>
-    <a href="{{ url()->previous() }}">&#8634; Back</a>
+    <a href="{{ url('/posts') }}" class="btn btn-primary">&#8634; Back</a>
     <form action="{{ route('posts.store') }}" method="POST">
         @csrf
         <div class="form-group">
