@@ -14,16 +14,18 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Create 1 admin user
+        User::factory()->create([
+            'role' => 'admin',
+            'name' => 'Admin',
+            'email' => 'admin@example.com'
+        ]);
+
+        // Create 5 users, each with 10 posts
         User::factory(5)
         ->has(Post::factory(10))
         ->create();
 
-        /*
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
-        */
 
         // $this->call(PostSeeder::class);
     }
