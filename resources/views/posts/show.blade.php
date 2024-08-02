@@ -14,6 +14,7 @@
         <li><b>ID:</b> {{ $post->id }}</li>
         <li><b>Title:</b> {{ $post->title }}</li>
         <li><b>Content:</b> {{ $post->content }}</li>
+        <li><b>Author:</b> {{ $post->user->name }}</li>
     </ul>
 </div>
 @endsection

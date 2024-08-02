@@ -12,23 +12,24 @@ use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-// Public routes
+// Public routes (No authentication required)
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/test', [PostController::class, 'test']);
+
 
 // Authentication routes
 Auth::routes();
 
-// Protected routes
-Route::group(['middleware' => ['auth']], function() {
+
+// Protected routes (Only authenticated users can access)
+Route::middleware('auth')->group(function() {
     Route::resource('posts', PostController::class);
     Route::get('/home', [HomeController::class, 'index'])->name('home');
-    Route::get('/test', [PostController::class, 'test']);
 });
 
-// Admin routes
+
+// Admin routes (Only admin users can access)
 Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
-    Route::get('register', [AdminUserController::class, 'create'])->name('register');
-    Route::post('register', [AdminUserController::class, 'store']);
     Route::get('login', [AdminAuthController::class, 'showLoginForm'])->name('login');
     Route::post('login', [AdminAuthController::class, 'login']);
     Route::get('dashboard', [AdminController::class, 'index'])->name('dashboard');
@@ -40,7 +41,8 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
     Route::resource('posts', AdminPostController::class);
 });
 
-// Author routes
+
+// Author routes (Only author users can access)
 Route::prefix('author')->name('author.')->middleware('author')->group(function () {
     Route::get('register', [AuthorAuthController::class, 'showRegistrationForm'])->name('register');
     Route::post('register', [AuthorAuthController::class, 'register']);

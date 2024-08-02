@@ -15,13 +15,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        // If user is not logged in, redirect to login page
-        if (Auth::user() == null)
-        {
-            return view("auth.login");
-        }
-
-        // If user is logged in, show only their posts
+        // Only show the user's posts
         $posts = Auth::user()->posts;
         return view('posts.index', compact('posts'));
     }
@@ -53,10 +47,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        // If user is not the owner of the post, return 403 Forbidden
-        if(Auth::id() != $post->user_id) {
-            abort(403);
-        }
+        $this->checkOwnership($post);
 
         return view('posts.show', compact('post'));
     }
@@ -66,6 +57,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $this->checkOwnership($post);
+
         return view('posts.edit', compact('post'));
     }
 
@@ -74,6 +67,8 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $this->checkOwnership($post);
+
         $request->validate([
             'title' => 'required',
             'content' => 'required'
@@ -88,8 +83,18 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->checkOwnership($post);
+
         $post->delete();
         return redirect()->route('posts.index');
+    }
+
+    private function checkOwnership(Post $post)
+    {
+        // If user is not the owner of the post, return 403 Forbidden.
+        if(Auth::id() != $post->user_id) {
+            abort(403);
+        }
     }
 
     public function test()

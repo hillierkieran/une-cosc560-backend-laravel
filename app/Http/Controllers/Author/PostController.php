@@ -14,6 +14,7 @@ class PostController extends Controller
      */
     public function index()
     {
+        // Only show the author's posts
         $posts = Auth::user()->posts;
         return view('author.posts.index', compact('posts'));
     }
@@ -36,10 +37,7 @@ class PostController extends Controller
             'content' => 'required',
         ]);
 
-        $post = new Post($request->all());
-        $post->user_id = Auth::id();
-        $post->save();
-
+        Post::create($request->all());
         return redirect()->route('author.posts.index');
     }
 
@@ -48,9 +46,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        // If author is not the owner of the post, return 403 Forbidden
         if (Auth::id() != $post->user_id) {
             abort(403);
         }
+
         return view('author.posts.show', compact('post'));
     }
 
@@ -59,9 +59,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        if (Auth::id() != $post->user_id) {
+        // If author is not the owner of the post, return 403 Forbidden
+        if(Auth::id() != $post->user_id) {
             abort(403);
         }
+
         return view('author.posts.edit', compact('post'));
     }
 
