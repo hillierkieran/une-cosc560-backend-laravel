@@ -16,18 +16,12 @@ class AuthorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // If user is not logged in, redirect to login page
-        if(!Auth::check()){
-            return redirect()->route('auth.login');
-        }
-
-        // If author logged in, allow access
-        if(Auth::user()->role === 'author'){
+        // If admin or author logged in, allow access
+        if(Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'author')){
             return $next($request);
         }
 
-        // If user is logged in but not author, return unauthorised message
-        return redirect()->back()->with('unauthorised', 'You are
-        unauthorised to access this page');
+        // Otherwise, abort with 403 Forbidden
+        abort(403);
     }
 }

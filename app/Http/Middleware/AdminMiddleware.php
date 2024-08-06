@@ -16,18 +16,12 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // If user is not logged in, redirect to login page
-        if(!Auth::check()){
-            return redirect()->route('auth.login');
-        }
-
         // If admin logged in, allow access
-        if(Auth::user()->role === 'admin'){
+        if(Auth::check() && Auth::user()->role === 'admin'){
             return $next($request);
         }
 
-        // If user is logged in but not admin, return unauthorised message
-        return redirect()->back()->with('unauthorised', 'You are
-        unauthorised to access this page');
+        // Otherwise, abort with 403 Forbidden
+        abort(403);
     }
 }

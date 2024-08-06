@@ -89,22 +89,14 @@ class PostController extends Controller
         return redirect()->route('posts.index');
     }
 
+    /**
+     * Check if the user is the owner of the post.
+     */
     private function checkOwnership(Post $post)
     {
         // If user is not the owner of the post, return 403 Forbidden.
         if(Auth::id() != $post->user_id) {
             abort(403);
         }
-    }
-
-    public function test()
-    {
-        // $results = User::all();
-        // $results = User::where('created_at', '>', new DateTime('2024-07-17T03:50:23+00:00'))->get();
-        // $results = User::orderBy('name','asc')->get();
-        // $results = User::skip(2)->take(3)->get();
-        $results = User::count();
-
-        dd($results);
     }
 }

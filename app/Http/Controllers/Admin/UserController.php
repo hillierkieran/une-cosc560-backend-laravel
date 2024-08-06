@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the users.
      */
     public function index()
     {
@@ -18,7 +18,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a new user.
      */
     public function create()
     {
@@ -26,12 +26,12 @@ class UserController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created user in storage.
      */
     public function store(Request $request)
     {
         $request->validate([
-            'role' => 'required|in:user,admin',
+            'role' => 'required|in:admin,author,user',
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
@@ -48,31 +48,36 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified user.
      */
-    public function show(string $id)
+    public function show(User $user)
     {
         return view('admin.users.show', compact('user'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified user.
      */
-    public function edit(string $id)
+    public function edit(User $user)
     {
         return view('admin.users.edit', compact('user'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified user in storage.
      */
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'role' => 'required|in:user,admin',
+            'role' => 'required|in:admin,author,user',
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,' . $user->id,
+            'email' => 'required|email',
             'password' => 'nullable',
+        ], [
+            'role.required' => 'A role is required.',
+            'role.in' => 'The role must be one of: admin, author, user.',
+            'name.required' => 'A name is required.',
+            'email.required' => 'An email address is required.',
         ]);
 
         $user->update([
@@ -86,7 +91,7 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified user from storage.
      */
     public function destroy(User $user)
     {
