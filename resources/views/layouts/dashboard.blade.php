@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="dark">
 
 <head>
     <meta charset="utf-8">
@@ -12,15 +12,21 @@
     <!-- Load Vite scripts and styles -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
+    <!-- Bootstrap Color Modes JS -->
+    <script src="{{ Vite::asset('resources/js/color-modes.js') }}"></script>
+
     <!-- Bootstrap Dashboard CSS -->
     <link href="{{ Vite::asset('resources/css/dashboard.css') }}" rel="stylesheet" >
 
     <!-- Bootstrap CSS and JS bundles -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" >
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" ></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 
 <body>
+    <!-- Color Mode Toggler -->
+    @include('components.color-toggler')
+
     <!-- SVG Sprites -->
     @include('components.svg-sprites')
 
