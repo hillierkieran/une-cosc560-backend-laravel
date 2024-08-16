@@ -16,12 +16,16 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // If admin logged in, allow access
-        if(Auth::check() && Auth::user()->role === 'admin'){
-            return $next($request);
+        if (!Auth::check()) {
+            // Redirect unauthenticated users to the login page with a flash message
+            return redirect()->route('login')->with('error', 'Please log in to access the admin area.');
         }
 
-        // Otherwise, abort with 403 Forbidden
-        abort(403);
+        if (Auth::user()->role !== 'admin') {
+            // If authenticated but not an admin, show a 403 error with a flash message
+            abort(403, 'You do not have the necessary permissions to access this area.');
+        }
+
+        return $next($request);
     }
 }

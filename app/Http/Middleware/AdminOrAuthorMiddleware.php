@@ -16,12 +16,16 @@ class AdminOrAuthorMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        // If admin or author logged in, allow access
-        if(Auth::check() && (Auth::user()->role === 'admin' || Auth::user()->role === 'author')){
-            return $next($request);
+        if (!Auth::check()) {
+            // Redirect unauthenticated users to the login page with a flash message
+            return redirect()->route('login')->with('error', 'Please log in to access the admin or author area.');
         }
 
-        // Otherwise, abort with 403 Forbidden
-        abort(403);
+        if (!in_array(Auth::user()->role, ['admin', 'author'])) {
+            // If authenticated but not an admin or author, show a 403 error with a flash message
+            abort(403, 'You do not have the necessary permissions to access this area.');
+        }
+
+        return $next($request);
     }
 }
