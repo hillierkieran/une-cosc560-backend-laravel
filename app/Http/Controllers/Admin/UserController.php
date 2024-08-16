@@ -34,7 +34,7 @@ class UserController extends Controller
             'role' => 'required|in:admin,author,user',
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required',
+            'password' => 'required|confirmed',
         ]);
 
         User::create([
@@ -72,7 +72,7 @@ class UserController extends Controller
             'role' => 'required|in:admin,author,user',
             'name' => 'required',
             'email' => 'required|email',
-            'password' => 'nullable',
+            'password' => 'nullable|confirmed',
         ], [
             'role.required' => 'A role is required.',
             'role.in' => 'The role must be one of: admin, author, user.',

@@ -48,6 +48,7 @@ class PostController extends Controller
         $this->checkPrivileges();
         $request->validate([
             'title' => 'required',
+            'user_id' => 'required|exists:users,id',
             'content' => 'required',
         ]);
         Post::create($request->all());
@@ -90,6 +91,7 @@ class PostController extends Controller
         $this->checkPrivileges($post);
         $request->validate([
             'title' => 'required',
+            'user_id' => 'required|exists:users,id',
             'content' => 'required',
         ]);
         $post->update($request->all());
@@ -108,16 +110,27 @@ class PostController extends Controller
 
     private function checkPrivileges(Post $post = null)
     {
-        if (Auth::user()->role === 'admin') {
-            // If admin, allow access
+        $user = Auth::user();
+
+        if ($user->role === 'admin') {
+            // Admin can access any post
             return;
-        } elseif (Auth::user()->role === 'author' && (!$post || Auth::user()->id === $post->user_id)) {
-            // If author and post is either not provided or author is the owner of the post, allow access
-            return;
-        } else {
-            // If anyone else, show 403 Forbidden error
-            abort(403);
         }
+
+        if ($user->role === 'author') {
+            if (!$post) {
+                // Authors can create new posts
+                return;
+            }
+
+            if ($post->user_id === $user->id) {
+                // Authors can only access their own posts
+                return;
+            }
+        }
+
+        // If none of the above conditions are met, deny access
+        abort(403, 'You do not have permission to access this resource.');
     }
 
     private function getPosts($author_id = null)

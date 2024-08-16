@@ -21,7 +21,7 @@
         <!-- Name Input -->
         <div class="form-group">
             <label for="name">Name</label>
-            <input id="name" type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}" required>
+            <input id="name" type="text" name="name" id="name" class="form-control" value="{{ old('name', $user->name) }}" required>
             @if ($errors->has('name'))
                 <span class="text-danger">{{ $errors->first('name') }}</span>
             @endif
@@ -30,7 +30,7 @@
         <!-- Email Input -->
         <div class="form-group">
             <label for="email">Email</label>
-            <input id="email" type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
+            <input id="email" type="email" name="email" id="email" class="form-control" value="{{ old('email', $user->email) }}" required>
             @if ($errors->has('email'))
                 <span class="text-danger">{{ $errors->first('email') }}</span>
             @endif
@@ -39,13 +39,13 @@
         <!-- Password Input -->
         <div class="form-group">
             <label for="password">Password (optional)</label>
-            <input id="password" type="password" name="password" class="form-control">
+            <input id="password" type="password" name="password" id="password" class="form-control">
         </div>
 
         <!-- Password Confirmation Input -->
         <div class="form-group">
             <label for="password_confirmation">Confirm Password</label>
-            <input type="password" name="password_confirmation" class="form-control">
+            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control">
         </div>
 
         <!-- Submit Button -->
