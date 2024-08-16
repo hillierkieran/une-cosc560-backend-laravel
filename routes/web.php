@@ -26,6 +26,6 @@ Route::prefix('admin')->name('admin.')->middleware('admin')->group(function () {
 });
 
 // Admin & Author routes
-Route::prefix('admin')->name('admin.')->middleware('author')->group(function () {
+Route::prefix('admin')->name('admin.')->middleware('adminOrAuthor')->group(function () {
     Route::resource('posts', AdminPostController::class); // Post management
 });
