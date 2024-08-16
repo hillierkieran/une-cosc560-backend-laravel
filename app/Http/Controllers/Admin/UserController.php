@@ -35,6 +35,15 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
+        ], [
+            'role.required' => 'A role is required.',
+            'role.in' => 'The role must be one of: admin, author, user.',
+            'name.required' => 'A name is required.',
+            'email.required' => 'An email address is required.',
+            'email.email' => 'Please provide a valid email address.',
+            'email.unique' => 'This email is already registered.',
+            'password.required' => 'A password is required.',
+            'password.confirmed' => 'The password confirmation does not match.',
         ]);
 
         User::create([
@@ -78,6 +87,8 @@ class UserController extends Controller
             'role.in' => 'The role must be one of: admin, author, user.',
             'name.required' => 'A name is required.',
             'email.required' => 'An email address is required.',
+            'email.email' => 'Please provide a valid email address.',
+            'password.confirmed' => 'The password confirmation does not match.',
         ]);
 
         $user->update([

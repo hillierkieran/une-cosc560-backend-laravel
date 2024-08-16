@@ -50,8 +50,17 @@ class PostController extends Controller
             'title' => 'required',
             'user_id' => 'required|exists:users,id',
             'content' => 'required',
+        ], [
+            'title.required' => 'A title is required.',
+            'user_id.required' => 'An author must be selected.',
+            'user_id.exists' => 'The selected author is invalid.',
+            'content.required' => 'Content is required.',
         ]);
-        Post::create($request->all());
+        Post::create([
+            'title' => $request->input('title'),
+            'user_id' => $request->input('user_id'),
+            'content' => $request->input('content'),
+        ]);
         return redirect()->route('admin.posts.index');
     }
 
@@ -93,8 +102,17 @@ class PostController extends Controller
             'title' => 'required',
             'user_id' => 'required|exists:users,id',
             'content' => 'required',
+        ], [
+            'title.required' => 'A title is required.',
+            'user_id.required' => 'An author must be selected.',
+            'user_id.exists' => 'The selected author is invalid.',
+            'content.required' => 'Content is required.',
         ]);
-        $post->update($request->all());
+        $post->update([
+            'title' => $request->input('title'),
+            'user_id' => $request->input('user_id'),
+            'content' => $request->input('content'),
+        ]);
         return redirect()->route('admin.posts.index');
     }
 
@@ -135,8 +153,8 @@ class PostController extends Controller
 
     private function getPosts($author_id = null)
     {
-        if ($author_id) {
-            // If author_id is provided, show only posts by that author
+        if (Auth::user()->role === 'admin' && $author_id) {
+            // If admin and author_id is provided, show only that author's posts
             return Post::where('user_id', $author_id)->get();
         } elseif (Auth::user()->role === 'admin') {
             // If admin, show all posts
