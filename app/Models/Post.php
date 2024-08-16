@@ -17,7 +17,7 @@ class Post extends Model
     {
         static::creating(function (Post $post)
         {
-            if(Auth()->check()) {
+            if(Auth()->check() && !$post->user_id) {
                 $post->user_id = Auth::id();
             }
         });

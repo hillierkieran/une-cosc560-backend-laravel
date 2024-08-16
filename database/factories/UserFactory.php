@@ -23,10 +23,16 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        // Generate a name
+        $name = fake()->name();
+
+        // Create an email based on the name
+        $email = Str::slug($name, '.') . '@example.com';
+
         return [
             'role' => 'author',
-            'name' => fake()->name(),
-            'email' => fake()->unique()->safeEmail(),
+            'name' => $name,
+            'email' => $email,
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),

@@ -63,7 +63,12 @@
     document.addEventListener('DOMContentLoaded', function () {
         const rows = document.querySelectorAll('table.table-hover tbody tr');
         rows.forEach(row => {
-            row.addEventListener('click', function () {
+            row.addEventListener('click', function (event) {
+                // Prevent the row click event if the click is on a button inside the row
+                if (event.target.closest('button')) {
+                    event.stopPropagation();
+                    return;
+                }
                 window.location.href = this.dataset.url;
             });
         });

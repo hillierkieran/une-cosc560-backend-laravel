@@ -23,7 +23,15 @@
             </tr>
             <tr>
                 <th>Author</th>
-                <td>{{ $post->user->name }}</td>
+                <td>
+                    @if (Auth::user()->role === 'admin')
+                        <a href="{{ route('admin.users.show', $post->user->id) }}" class="link-offset-2-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
+                            {{ $post->user->name }}
+                        </a>
+                    @else
+                        {{ $post->user->name }}
+                    @endif
+                </td>
             </tr>
             <tr>
                 <th>Content</th>
