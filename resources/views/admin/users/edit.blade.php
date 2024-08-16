@@ -1,14 +1,14 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
-    <h1>Edit Blog User</h1>
-    <a href="{{ route('admin.users.index') }}" class="btn btn-primary">&#8634; Back</a>
+    <h1 class="my-3">Edit User</h1>
+
     <form action="{{ route('admin.users.update', $user->id) }}" method="POST">
         @csrf
         @method('PUT')
 
-        {{-- Role Input --}}
+        <!-- Role Input -->
         <div class="form-group">
             <label for="role">Role</label>
             <select name="role" id="role" class="form-control" required>
@@ -18,7 +18,7 @@
             </select>
         </div>
 
-        {{-- Name Input --}}
+        <!-- Name Input -->
         <div class="form-group">
             <label for="name">Name</label>
             <input id="name" type="text" name="name" class="form-control" value="{{ old('name', $user->name) }}" required>
@@ -27,7 +27,7 @@
             @endif
         </div>
 
-        {{-- Email Input --}}
+        <!-- Email Input -->
         <div class="form-group">
             <label for="email">Email</label>
             <input id="email" type="email" name="email" class="form-control" value="{{ old('email', $user->email) }}" required>
@@ -36,14 +36,20 @@
             @endif
         </div>
 
-        {{-- Password Input --}}
+        <!-- Password Input -->
         <div class="form-group">
             <label for="password">Password (optional)</label>
-            <input id="password" type="password" name="password" class="form-control" autocomplete="new-password">
+            <input id="password" type="password" name="password" class="form-control">
         </div>
 
-        {{-- Submit Button --}}
-        <button type="submit" class="btn btn-primary">Update</button>
+        <!-- Password Confirmation Input -->
+        <div class="form-group">
+            <label for="password_confirmation">Confirm Password</label>
+            <input type="password" name="password_confirmation" class="form-control">
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary mt-2">Update</button>
     </form>
 </div>
 @endsection

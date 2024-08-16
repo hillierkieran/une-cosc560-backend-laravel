@@ -5,19 +5,41 @@
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebarMenu" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
+
+            <ul class="nav flex-column mb-auto">
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="{{ URL::previous() }}">
+                        <svg class="bi"><use xlink:href="#arrow-left-square"/></svg>
+                        Back
+                    </a>
+                </li>
+            </ul>
+
+            <hr class="my-3">
+
             <ul class="nav flex-column">
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{ route('admin.users.index') }}">
-                        <svg class="bi"><use xlink:href="#people"/></svg>
-                        User Managment
+                    <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="{{ route('home') }}">
+                        <svg class="bi"><use xlink:href="#house-fill"/></svg>
+                        Dashboard
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.posts.index') }}">
-                        <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
-                        Post Managment
-                    </a>
-                </li>
+                @if (Auth::user()->role === 'admin')
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center gap-2" aria-current="page" href="{{ route('admin.users.index') }}">
+                            <svg class="bi"><use xlink:href="#people"/></svg>
+                            User Managment
+                        </a>
+                    </li>
+                @endif
+                @if (Auth::user()->role === 'admin' || Auth::user()->role === 'author')
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center gap-2" href="{{ route('admin.posts.index') }}">
+                            <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
+                            Post Managment
+                        </a>
+                    </li>
+                @endif
             </ul>
 
             <hr class="my-3">
@@ -29,7 +51,7 @@
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
-                        <svg class="bi"><use xlink:href="#door-closed"/></svg>
+                        <svg class="bi"><use xlink:href="#door-open"/></svg>
                         Sign out
                     </a>
                 </li>

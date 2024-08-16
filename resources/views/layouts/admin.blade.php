@@ -1,68 +1,43 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-bs-theme="auto">
+
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <!-- Load Vite scripts and styles -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Color Modes JS -->
+    <script src="{{ Vite::asset('resources/js/color-modes.js') }}"></script>
 
-    <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Bootstrap Dashboard CSS -->
+    <link href="{{ Vite::asset('resources/css/dashboard.css') }}" rel="stylesheet" >
+
+    <!-- Bootstrap CSS and JS bundles -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
+
 <body>
+    <!-- Color Mode Toggler -->
+    @include('components.color-toggler')
 
-    <!-- Sidebar -->
-    <header class="navbar sticky-top bg-dark flex-md-nowrap p-0 shadow" data-bs-theme="dark">
-        <a class="navbar-brand col-md-3 col-lg-2 me-0 px-3 fs-6 text-white" href="#">{{ config('app.name', 'Laravel') }}</a>
+    <!-- SVG icons -->
+    @include('components.svg-icons')
 
-        <ul class="navbar-nav flex-row d-md-none">
-            <li class="nav-item text-nowrap">
-            <button class="nav-link px-3 text-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSearch" aria-controls="navbarSearch" aria-expanded="false" aria-label="Toggle search">
-                <svg class="bi"><use xlink:href="#search"/></svg>
-            </button>
-            </li>
-            <li class="nav-item text-nowrap">
-            <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
-                <svg class="bi"><use xlink:href="#list"/></svg>
-            </button>
-            </li>
-        </ul>
-
-        <div id="navbarSearch" class="navbar-search w-100 collapse">
-            <input class="form-control w-100 rounded-0 border-0" type="text" placeholder="Search" aria-label="Search">
-        </div>
-    </header>
+    <!-- Navbar -->
+    @include('components.navbar')
 
     <div class="container-fluid">
         <div class="row">
+
             <!-- Sidebar -->
-            <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
-                <div class="position-sticky pt-3">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ route('admin.posts.index') }}">
-                                Manage Posts
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('admin.users.index') }}">
-                                Manage Users
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </nav>
+            @include('components.sidebar')
 
             <!-- Main Content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">

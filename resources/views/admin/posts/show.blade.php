@@ -1,16 +1,17 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container">
-    <h1>Blog Post Details</h1>
-    <a href="{{ route('admin.posts.index') }}" class="btn btn-primary">&#8634; Back</a>
-    <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-primary">&#9998; Edit</a>
+    <h1 class="my-3">Post Details</h1>
+
+    <a href="{{ route('admin.posts.edit', $post->id) }}" class="btn btn-warning"><i class="bi bi-pencil-fill"></i> Edit</a>
     <form action="{{ route('admin.posts.destroy', $post->id) }}" method="POST" style="display:inline;">
         @csrf
         @method('DELETE')
-        <button type="submit" class="btn btn-danger">&#128465; Delete</button>
+        <button type="submit" class="btn btn-danger"><i class="bi bi-trash-fill"></i> Delete</button>
     </form>
-    <table class="table mt-3">
+
+    <table class="table w-auto mt-3">
         <tbody>
             <tr>
                 <th>ID</th>

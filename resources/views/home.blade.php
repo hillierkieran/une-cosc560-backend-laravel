@@ -17,11 +17,11 @@
                     <a href="{{ route('posts.index') }}" class="btn btn-primary">View Blog Posts</a>
 
                     @if (Auth::user()->role === 'admin')
-                        <a href={{ route('admin.users.index') }} class="btn btn-primary">User Managment</a>
+                        <a href={{ route('admin.users.index') }} class="btn btn-primary">User Management</a>
                     @endif
 
                     @if (Auth::user()->role === 'admin' || Auth::user()->role === 'author')
-                        <a href={{ route('admin.posts.index') }} class="btn btn-primary">Post Managment</a>
+                        <a href={{ route('admin.posts.index') }} class="btn btn-primary">Post Management</a>
                     @endif
                 </div>
             </div>

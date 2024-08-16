@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,10 +13,12 @@ class PostController extends Controller
     /**
      * Display a listing of the posts.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = $this->getPosts();
-        return view('admin.posts.index', compact('posts'));
+        $author_id = $request->input('author_id');
+        $posts = $this->getPosts($author_id);
+        $users = User::all();
+        return view('admin.posts.index', compact('posts', 'users'));
     }
 
     /**
@@ -24,7 +27,17 @@ class PostController extends Controller
     public function create()
     {
         $this->checkPrivileges();
-        return view('admin.posts.create');
+
+        // If user is admin, they can create posts for any users
+        if (Auth::user()->role === 'admin') {
+            $users = User::all();
+        }
+        // If user is author, they can only create posts for themselves
+        else {
+            $users = User::where('_id', Auth::id())->first();
+        }
+
+        return view('admin.posts.create', compact('users'));
     }
 
     /**
@@ -56,7 +69,17 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $this->checkPrivileges($post);
-        return view('admin.posts.edit', compact('post'));
+
+        // If user is admin, they can credit posts to any users
+        if (Auth::user()->role === 'admin') {
+            $users = User::all();
+        }
+        // If user is author, they can only credit posts to themselves
+        else {
+            $users = User::where('_id', Auth::id())->first();
+        }
+
+        return view('admin.posts.edit', compact('post', 'users'));
     }
 
     /**
@@ -97,9 +120,12 @@ class PostController extends Controller
         }
     }
 
-    private function getPosts()
+    private function getPosts($author_id = null)
     {
-        if (Auth::user()->role === 'admin') {
+        if ($author_id) {
+            // If author_id is provided, show only posts by that author
+            return Post::where('user_id', $author_id)->get();
+        } elseif (Auth::user()->role === 'admin') {
             // If admin, show all posts
             return Post::all();
         } elseif (Auth::user()->role === 'author') {
