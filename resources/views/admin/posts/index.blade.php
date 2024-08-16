@@ -33,14 +33,14 @@
                 <th>ID</th>
                 <th>Author</th>
                 <th>Title</th>
-                <th>Sumamary</th>
+                <th>Summary</th>
                 <th>Quick Actions</th>
             </tr>
         </thead>
         <tbody>
             @foreach($posts as $post)
                 <tr data-url="{{ route('admin.posts.show', $post->id) }}" style="cursor: pointer;">
-                    <td>...{{ substr($post->id, -4) }}</td>
+                    <td title="{{ $post->id }}">...{{ substr($post->id, -5) }}</td>
                     <td>{{ \Illuminate\Support\Str::limit($post->user->name, 20) }}</td>
                     <td>{{ \Illuminate\Support\Str::limit($post->title, 40) }}</td>
                     <td>{{ \Illuminate\Support\Str::limit($post->content, 30) }}</td>

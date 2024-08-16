@@ -18,7 +18,7 @@ class Post extends Model
         static::creating(function (Post $post)
         {
             // If no user_id set, set it to the current user's ID
-            if(!$post->user_id && Auth()->check()) {
+            if (is_null($post->user_id) && Auth::check()) {
                 $post->user_id = Auth::id();
             }
         });
