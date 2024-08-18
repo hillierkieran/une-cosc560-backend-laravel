@@ -1,4 +1,4 @@
-UNE - COSC60 Advanced Web Programming - Assignment 1
+UNE - COSC60 Advanced Web Programming - Assignment 2
 
 ### GitHub Repository Location
 
@@ -14,93 +14,20 @@ UNE - COSC60 Advanced Web Programming - Assignment 1
 
 For setup instructions, go to the [SETUP.md](./SETUP.md) file.
 
-<br />
-<br />
+# Report
 
-# Assessment 2 Authentication and Admin Panel
+### My Approach
 
-## Objective
+Since I had already completed the initial setup, MongoDB integration, and authentication with Laravel UI, I started by making draft controllers and setting up routes. At first, I created more controllers and routes than I actually needed, so I had to scale things back and refactor. Getting the hang of middleware, especially how to reference and use it properly, took some time, which slowed me down quite a bit. Once I streamlined the backend, I moved on to working on the Blade views.
 
-Enhance the basic blog application by adding user authentication using Laravel UI with Bootstrap. Create an admin panel for managing blog posts and users. This builds on concepts learned in the previous assessment and introduces new features for a robust application.
+I started by building out the new views I needed using the existing app layout. Once the site was mostly functional, I tried integrating the Bootstrap Dashboard template. This turned out to be trickier than I expected, and I spent a fair bit of time getting it right. Eventually, I managed to get the template to fit with the project and broke it off into components. After that, I focused on finishing up the remaining functionality, fixing bugs, adding some nice extra touches, and polishing the overall experience.
 
-## Prerequisites
+### Challenges Faced
 
-1. Completed Assessment 1: Basic Blog Application.
+The two main challenges I encountered were, first, the overall backend structure involving the controller, middleware, and routing setup; and second, integrating the Bootstrap Dashboard template. Getting the middleware structure and references right was tricky initially, and the complexity of the dashboard template took some time to fully understand and implement.
 
-## Guidelines
+### Extra Features
 
-1. **Setup and Initialise Project:**
-    - Ensure your development environment is set up with the basic blog application from Assessment 1.
-    - Create a new branch in your GitHub repository for this feature: `git checkout -b feature/auth-admin-panel`.
+The two main extra features I’m proud of are, first, an author filter in the post management panel, available only to admins, which makes it easier to filter posts by author; and second, detailed form validation with clear error messages displayed directly under the relevant input fields.
 
-2. **Setup MongoDB with Laravel as demonstrated in Lecture 4.**
-
-3. **Install Laravel UI and Set Up Authentication:**
-    - Install Laravel UI package: `composer require laravel/ui`.
-    - Generate the authentication scaffolding: `php artisan ui bootstrap --auth`.
-    - Run the required commands to set up Bootstrap: `npm install && npm run dev`.
-    - Update the master layout to include Bootstrap styling.
-
-4. **Create Middleware for Admin Access (Bonus):**
-    - Generate middleware to restrict access to the admin panel: `php artisan make:middleware AdminMiddleware`.
-    - Implement the middleware to check if the authenticated user is an admin.
-    - Apply the middleware to the admin routes.
-
-5. **Define Admin Routes:**
-    - Define routes in `web.php` for the admin panel with Admin prefix.
-    - Ensure they are protected by the AdminMiddleware (Bonus).
-    - Create routes for managing users and blog posts within the admin panel.
-
-6. **Create Admin Controllers:**
-    - Generate a controller for managing users: `php artisan make:controller Admin/UserController`.
-    - Generate a controller for managing blog posts: `php artisan make:controller Admin/PostController`.
-    - Implement CRUD operations in the respective controllers with appropriate validation.
-
-7. **Create Blade Views for Admin Panel:**
-    - Download bootstrap examples from [Bootstrap Examples](https://getbootstrap.com/docs/5.3/examples/) and use the dashboard template as the landing page. Use the form template to create your forms.
-    - Create a new layout for the admin panel (`admin.blade.php`).
-    - Create views for listing, creating, editing, and deleting users and blog posts.
-    - Ensure the views use Bootstrap components for styling and are consistent with the overall application design.
-
-8. **Enhance User Management:**
-    - Add roles to users (e.g., admin, author, user) and implement role-based access control.
-    - Update the registration process to allow assigning roles and create a new migration to add roles in the database (admin, author, user).
-    - Ensure only admins can access user management functionalities.
-
-9. **Testing:**
-    - Thoroughly test the authentication system.
-    - Test each admin functionality by creating, reading, updating, and deleting users and blog posts.
-    - Ensure that non-admin users cannot access the admin panel.
-
-10. **GitHub Push:**
-    - Ensure your project is version controlled and pushed to GitHub after each major step.
-
-## Deliverables
-
-- An enhanced blog application with authentication and an admin panel.
-- Source code pushed to a Private GitHub repository on a separate branch.
-- A brief report in the `README.md` file describing your approach, any challenges faced, and the GitHub repository URL.
-
-## Marking Criteria
-
-| Feature Requirement                                        | Points |
-|------------------------------------------------------------|--------|
-| Setup and Initialise Project                               | 1      |
-| Setup MongoDB                                              | 2      |
-| Install Laravel UI and Set Up Authentication               | 2      |
-| Define Admin Routes                                        | 1      |
-| Create Admin Controllers                                   | 2      |
-| Create Blade Views for Admin Panel                         | 4      |
-| Enhance User Management                                    | 2      |
-| Testing                                                    | 2      |
-| GitHub                                                     | 2      |
-| Report                                                     | 2      |
-| Bonus - Create middleware for admin access and apply to admin routes. | 2      |
-
-*Total mark, including any bonus points, will not exceed 20.*
-
-## Submission
-
-1. Copy `.env` file to `.env.example`.
-2. Use git and commit your work, then create a zip of the entire folder (excluding files in `.gitignore`) and submit the zip file via Moodle.
-3. Ensure you do not include files and folders listed in `.gitignore`.
+I also added other smaller enhancements like Bootstrap icons, a link from the author’s name on the post show page to their user show page, and other minor tweaks and polish.

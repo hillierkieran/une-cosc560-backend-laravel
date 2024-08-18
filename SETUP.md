@@ -2,63 +2,84 @@
 
 After cloning this Laravel project, follow these steps to set up the application:
 
-1. **Move the Project to the Web Directory:** (Optional if using Laragon)
+### 1. **Move the Project to the Web Directory** (Optional if using Laragon)
 
-    Move the project into the `www` directory of Laragon (default: `C:\laragon\www`).
+   If using Laragon, move the project into the `www` directory (default location: `C:\laragon\www`).
 
-2. **Install Dependencies**
+### 2. **Install PHP Dependencies**
 
-   With Composer installed, install PHP dependencies:
+   Ensure [Composer](https://getcomposer.org/download/) is installed, then navigate to the project directory and install the required PHP dependencies:
 
    ```bash
    composer install
    ```
 
-3. **Set Up Environment**
+### 3. **Set Up Environment Configuration**
 
-   Copy the `.env.example` file to a new `.env` file:
+   Create a copy of the `.env.example` file to `.env`:
 
    ```bash
    cp .env.example .env
    ```
 
-4. **Generate Application Key**
+   If necessary, update environment variables such as database credentials, etc.
 
-   Generate a new application key:
+### 4. **Generate Application Key**
+
+   Generate a unique application key, which is used for encrypting data:
 
    ```bash
    php artisan key:generate
    ```
 
-5. **Run Migrations**
+### 5. **Run Database Migrations**
 
-   Apply database migrations:
+   Apply the database migrations to set up the necessary tables:
 
    ```bash
    php artisan migrate
    ```
 
-6. **Seed the Database**
+### 6. **Seed the Database with Initial Data**
 
-   Populate the database with initial data:
+   Populate the database with initial test data:
 
    ```bash
    php artisan db:seed
    ```
 
-7. **Serve the Application**
+### 7. **Build Frontend Assets**
 
-   Start the local development server:
+   If using frontend assets (CSS/JS), install Node.js dependencies and compile the assets:
+
+   ```bash
+   npm install
+   npm run build # Optional
+   ```
+
+   If you're in development mode, you can use:
+
+   ```bash
+   npm run dev
+   ```
+
+### 8. **Serve the Application**
+
+   Start the local development server to serve the application:
 
    ```bash
    php artisan serve
    ```
 
-   **OR, if using Laragon:**
+   **_OR_, if using Laragon:**
 
-   Open Laragon and click on the "Start All" button to start the web server and database server.
+   Simply open Laragon and click on the "Start All" button to start the web server and database server. Laragon will automatically assign a `.test` domain to your project.
 
-8. **Access Your Application:**
+### 9. **Access Your Application**
 
-   The application should now be available at `http://localhost:8000`, or `http://myproject.test` if using Laragon.
+   Once the server is running, you can access your application at:
 
+   - `http://localhost:8000` (for the built-in PHP server)
+   - `http://projectfoldername.test` (if using Laragon)
+
+   Ensure everything is working as expected and that the application is fully functional.
