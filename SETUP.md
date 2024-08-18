@@ -39,6 +39,13 @@ After cloning this Laravel project, follow these steps to set up the application
    ```bash
    php artisan migrate
    ```
+   **Note**: If you encounter an issue where it says there is "nothing to migrate," try running the following command to reset the migrations:
+
+   ```bash
+   php artisan migrate:reset
+   ```
+
+   Then try migrating again.
 
 ### 6. **Seed the Database with Initial Data**
 
@@ -54,13 +61,8 @@ After cloning this Laravel project, follow these steps to set up the application
 
    ```bash
    npm install
-   npm run build # Optional
-   ```
-
-   If you're in development mode, you can use:
-
-   ```bash
-   npm run dev
+   npm run dev   # for development mode
+   npm run build # for production
    ```
 
 ### 8. **Serve the Application**
@@ -83,3 +85,12 @@ After cloning this Laravel project, follow these steps to set up the application
    - `http://projectfoldername.test` (if using Laragon)
 
    Ensure everything is working as expected and that the application is fully functional.
+
+### 10. **Disable Browser Extensions/Features Blocking Local Development**
+
+Some browsers, such as Brave, and certain browser extensions (like ad blockers or privacy tools) may block local development resources, including CSS and JavaScript files served by Vite. To ensure that your application works correctly:
+
+- **Brave Browser Users:** Disable "Shields" for `localhost` by clicking the Brave icon in the address bar and turning off Shields for that site.
+- **Other Browsers/Extensions:** If you're using any ad blockers or privacy extensions, either disable them or create an exception for your local development environment.
+
+This will prevent any unexpected blocking of assets and ensure the smooth functioning of your application during development.
