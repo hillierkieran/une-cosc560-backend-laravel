@@ -48,7 +48,7 @@ class PostController extends Controller
         $this->checkPrivileges();
         $request->validate([
             'title' => 'required',
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,_id',
             'content' => 'required',
         ], [
             'title.required' => 'A title is required.',
@@ -100,7 +100,7 @@ class PostController extends Controller
         $this->checkPrivileges($post);
         $request->validate([
             'title' => 'required',
-            'user_id' => 'required|exists:users,id',
+            'user_id' => 'required|exists:users,_id',
             'content' => 'required',
         ], [
             'title.required' => 'A title is required.',
