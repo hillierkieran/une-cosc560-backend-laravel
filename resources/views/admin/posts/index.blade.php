@@ -19,9 +19,14 @@
                                 <option value="{{ $user->id }}" {{ request('author_id') == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
                             @endforeach
                         </select>
+                        <select name="trashed" class="form-control ms-2">
+                            <option value="0" {{ request('trashed') == '0' ? 'selected' : '' }}>Active Posts</option>
+                            <option value="1" {{ request('trashed') == '1' ? 'selected' : '' }}>Include Deleted Posts</option>
+                        </select>
                         <button type="submit" class="btn btn-primary">Filter</button>
                     </div>
                 </form>
+
             </div>
         @endif
     </div>
@@ -41,7 +46,7 @@
             @foreach($posts as $post)
                 <tr data-url="{{ route('admin.posts.show', $post->id) }}" style="cursor: pointer;">
                     <td title="{{ $post->id }}">...{{ substr($post->id, -5) }}</td>
-                    <td>{{ \Illuminate\Support\Str::limit($post->user->name, 20) }}</td>
+                    <td>{{ $post->user ? (\Illuminate\Support\Str::limit($post->user->name, 20)) : 'Deleted User' }}</td>
                     <td>{{ \Illuminate\Support\Str::limit($post->title, 40) }}</td>
                     <td>{{ \Illuminate\Support\Str::limit($post->content, 30) }}</td>
                     <td>

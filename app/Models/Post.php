@@ -7,11 +7,12 @@ use MongoDB\Laravel\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use MongoDB\Laravel\Eloquent\SoftDeletes;
 use Laravel\Sanctum\HasApiTokens;
 
 class Post extends Model
 {
-    use HasFactory, Notifiable, HasApiTokens;
+    use HasFactory, Notifiable, HasApiTokens, SoftDeletes;
 
     protected $fillable = ['title', 'content', 'user_id'];
 

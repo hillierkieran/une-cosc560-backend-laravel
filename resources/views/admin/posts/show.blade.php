@@ -24,7 +24,9 @@
             <tr>
                 <th>Author</th>
                 <td>
-                    @if (Auth::user()->role === 'admin')
+                    @if (!$post->user)
+                        <span class="text-danger">Deleted User</span>
+                    @elseif (Auth::user()->role === 'admin')
                         <a href="{{ route('admin.users.show', $post->user->id) }}" class="link-offset-2-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover">
                             {{ $post->user->name }}
                         </a>
