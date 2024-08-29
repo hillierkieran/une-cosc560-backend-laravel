@@ -23,7 +23,7 @@
             @if (Auth::user()->role === 'admin')
                 <select name="user_id" id="user_id" class="form-control" required>
                     @foreach($users as $user)
-                        <option value="{{ $user->id }}" {{ old('user_id', $post->user_id) == $user->id ? 'selected' : '' }}>{{ $user->name }}</option>
+                        <option value="{{ $user->id }}" {{ old('user_id', $post->user_id) == $user->id ? 'selected' : '' }}>{{ $user->name }}{{ !$post->user && $post->user_id == $user->id ? ' (!!! Deleted User !!!)' : '' }}</option>
                     @endforeach
                 </select>
                 @if ($errors->has('user_id'))

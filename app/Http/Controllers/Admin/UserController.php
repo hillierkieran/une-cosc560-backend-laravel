@@ -106,7 +106,18 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->delete();
+        $user->posts()->delete(); // Soft delete all posts by the user
+        $user->delete(); // Soft delete the user
         return redirect()->route('admin.users.index');
+    }
+
+    /**
+     * Restore the specified user from storage.
+     */
+    public function restore($id)
+    {
+        $user = User::withTrashed()->find($id);
+        $user->restore(); // Restore the user
+        $user->posts()->restore(); // Restore the user's posts
     }
 }

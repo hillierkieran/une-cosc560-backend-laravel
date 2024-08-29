@@ -16,7 +16,8 @@ class PostController extends Controller
     public function index(Request $request)
     {
         $author_id = $request->input('author_id');
-        $posts = $this->getPosts($author_id);
+        $includeTrashed = $request->input('trashed', false); // Optional: Filter for trashed posts
+        $posts = $this->getPosts($author_id, $includeTrashed);
         $users = User::all();
         return view('admin.posts.index', compact('posts', 'users'));
     }
@@ -80,13 +81,15 @@ class PostController extends Controller
     {
         $this->checkPrivileges($post);
 
+        $query = User::query()->withTrashed();
+
         // If user is admin, they can credit posts to any users
         if (Auth::user()->role === 'admin') {
-            $users = User::all();
+            $users = $query->get();
         }
         // If user is author, they can only credit posts to themselves
         else {
-            $users = User::where('_id', Auth::id())->first();
+            $users = $query->where('_id', Auth::id())->first();
         }
 
         return view('admin.posts.edit', compact('post', 'users'));
@@ -151,17 +154,23 @@ class PostController extends Controller
         abort(403, 'You do not have permission to access this resource.');
     }
 
-    private function getPosts($author_id = null)
+    private function getPosts($author_id = null, $includeTrashed = false)
     {
+        $query = Post::query();
+
+        if ($includeTrashed) {
+            $query->withTrashed(); // Include soft-deleted posts in the results
+        }
+
         if (Auth::user()->role === 'admin' && $author_id) {
             // If admin and author_id is provided, show only that author's posts
-            return Post::where('user_id', $author_id)->get();
+            return $query->where('user_id', $author_id)->get();
         } elseif (Auth::user()->role === 'admin') {
             // If admin, show all posts
-            return Post::all();
+            return $query->get();
         } elseif (Auth::user()->role === 'author') {
             // If author, show only own posts
-            return Auth::user()->posts;
+            return Auth::user()->posts()->withTrashed($includeTrashed)->get();
         } else {
             // If anyone else, show 403 Forbidden error
             abort(403);
