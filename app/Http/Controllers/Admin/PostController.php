@@ -35,7 +35,7 @@ class PostController extends Controller
         }
         // If user is author, they can only create posts for themselves
         else {
-            $users = User::where('_id', Auth::id())->first();
+            $users = User::where('id', Auth::id())->first();
         }
 
         return view('admin.posts.create', compact('users'));
@@ -49,7 +49,7 @@ class PostController extends Controller
         $this->checkPrivileges();
         $request->validate([
             'title' => 'required',
-            'user_id' => 'required|exists:users,_id',
+            'user_id' => 'required|exists:users,id',
             'content' => 'required',
         ], [
             'title.required' => 'A title is required.',
@@ -89,7 +89,7 @@ class PostController extends Controller
         }
         // If user is author, they can only credit posts to themselves
         else {
-            $users = $query->where('_id', Auth::id())->first();
+            $users = $query->where('id', Auth::id())->first();
         }
 
         return view('admin.posts.edit', compact('post', 'users'));
@@ -103,7 +103,7 @@ class PostController extends Controller
         $this->checkPrivileges($post);
         $request->validate([
             'title' => 'required',
-            'user_id' => 'required|exists:users,_id',
+            'user_id' => 'required|exists:users,id',
             'content' => 'required',
         ], [
             'title.required' => 'A title is required.',
