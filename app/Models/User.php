@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+// use App\Models\Sanctum\PersonalAccessToken;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use MongoDB\Laravel\Auth\User as Authenticatable;
@@ -53,4 +54,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * Get the personal access tokens that belong to the user.
+     *
+     * NOTE: Adding this created errors for some reason.
+     */
+    // public function tokens(): HasMany
+    // {
+    //     return $this->hasMany(PersonalAccessToken::class);
+    // }
 }
