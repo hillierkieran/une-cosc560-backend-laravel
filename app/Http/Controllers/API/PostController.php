@@ -7,10 +7,26 @@ use App\Models\Post;
 
 class PostController extends Controller
 {
+    // Helper function to format post data
+    private function formatPost($post)
+    {
+        return [
+            'id' => $post->_id, // Change Mongo's `_id` to more common `id`
+            'title' => $post->title,
+            'content' => $post->content,
+            'user_id' => $post->user_id,
+            // 'created_at' => $post->created_at,
+            // 'updated_at' => $post->updated_at,
+        ];
+    }
+
     // Fetch all blog posts
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::all()->map(function ($post) {
+            return $this->formatPost($post);
+        });
+
         return response()->json([
             'data' => $posts,
             'message' => 'All posts fetched successfully'
@@ -28,8 +44,11 @@ class PostController extends Controller
             ], 404);
         }
 
+        // Format the post using the helper function
+        $formatedPost = $this->formatPost($post);
+
         return response()->json([
-            'data' => $post,
+            'data' => $this->formatPost($post),
             'message' => 'Post fetched successfully'
         ], 200);
     }
