@@ -1,6 +1,6 @@
 import './bootstrap';
 
-import.meta.glob([
-    '../css/**',
-    '../js/**',
-  ]);
+// import.meta.glob([
+//     '../css/**',
+//     '../js/**',
+//   ]);
