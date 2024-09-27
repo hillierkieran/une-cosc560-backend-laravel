@@ -10,7 +10,7 @@ This project is a Laravel backend providing a RESTful API that serves blog post 
 
 **React**: [github.com/hillierkieran/une-cosc560-frontend-react-app](https://github.com/hillierkieran/une-cosc560-frontend-react-app)
 
-**Laravel**: [github.com/hillierkieran/une-cosc560-backend-laravel/tree/feature/sanctum-api-integration](https://github.com/hillierkieran/une-cosc560-backend-laravel/tree/feature/sanctum-api-integration)
+**Laravel**: [github.com/hillierkieran/une-cosc560-backend-laravel](https://github.com/hillierkieran/une-cosc560-backend-laravel)
 
 ### Setup Instructions
 
